@@ -1,5 +1,7 @@
 # TURF
-TURF is a Web App for players to check their recent performance on URF Mode games giving them a score and world ranking.
+TURF is project to participate in the Riot Games API Challenge.
+
+The front-end consist in a Web App for players to check their recent performance on URF Mode games giving them a score and world ranking.
 
 Also shows the TOP 10 URF players across all regions (or a specific one), sorting them by score, kills, deaths, assists, total damage taken and total damage dealt to champions.
 
