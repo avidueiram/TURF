@@ -1,4 +1,4 @@
-# TURF
+# TURF - Top Ultra Rapid Fire
 TURF is project to participate in the Riot Games API Challenge.
 
 The front-end consist in a Web App for players to check their recent performance on URF Mode games giving them a score and world ranking.
