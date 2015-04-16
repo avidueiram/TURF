@@ -17,3 +17,11 @@ Viktor is a java desktop app build for capturing the URF game ids from the new a
 Heimerdinger is a java desktop app build for taking the game ids captured by Viktor, and process each game, capturing the match data and saving on a database.
 
 _Under construction_
+
+## How to install/run app
+
+## Screenshots
+
+## Video
+
+## Credits
