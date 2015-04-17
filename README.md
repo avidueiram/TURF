@@ -16,9 +16,21 @@ Viktor is a java desktop app build for capturing the URF game ids from the new a
 ### Heimerdinger
 Heimerdinger is a java desktop app build for taking the game ids captured by Viktor, and process each game, capturing the match data and saving on a database.
 
-_Under construction_
+### TURF Website
+TURF is a web app build with HTML5, CSS, JQuery and PHP that shows data collected by Heimerdinger and the app itself.
 
 ## How to install/run app
+* Download & install WAMP or similar package like EasyPHP: http://www.easyphp.org/easyphp-devserver.php
+* Download TURF files: https://github.com/v11398/TURF/archive/master.zip
+* Create database called "topurf"
+* Execute the sql script located in:
+  * `TURF/SQL/topurf.sql` This will create the database tables
+* Execute the sql script located in:
+  * `TURF/SQL/sample_data.sql` This will insert sample data to the tables
+* Move the WebApp folder to Apache www folder
+* Open the PHP file located at:
+  * `TURF/WebApp/ws/globals.php`: Configure API KEY & MySQL
+* Start Apache/MySQL Server and go to http://localhost/projects/TURF
 
 ## Screenshots
 ### Home
