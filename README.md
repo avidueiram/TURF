@@ -1,7 +1,7 @@
 # TURF - Top Ultra Rapid Fire
 TURF is project for the Riot Games API Challenge.
 
-The front-end consist in a Web App for players to check their recent performance on URF Mode games giving them a score and world ranking.
+The front-end consist in a Web App for players to check their recent performance on URF Mode games giving them a [score](https://github.com/v11398/TURF/wiki/%C2%BFHow-is-the-score-calculated%3F) and world ranking.
 
 Also shows the TOP 10 URF players across all regions (or a specific one), sorting them by score, kills, deaths, assists, total damage taken and total damage dealt to champions.
 
@@ -36,7 +36,7 @@ TURF is a web app build with HTML5, CSS, JQuery and PHP that shows data collecte
   * `TURF/SQL/sample_data.sql` This will insert sample data to the tables
 * Move the WebApp folder content to Apache www folder
 * Open the PHP file located at:
-  * `[Apache WWWW]/TURF/ws/globals.php`: Configure API KEY & MySQL
+  * `[Apache WWW]/TURF/ws/globals.php`: Configure API KEY & MySQL
 * Start Apache/MySQL Server and go to http://localhost/TURF
 
 ## Screenshots
