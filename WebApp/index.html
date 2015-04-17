@@ -1,0 +1,563 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TURF - Top Ultra Rapid Fire</title>
+<link href="css/normalize.css" rel="stylesheet" type="text/css">
+<link href="css/style2.css" rel="stylesheet" type="text/css">
+<script src="js/jquery-2.1.3.min.js"></script>
+<script>
+var id;
+var name;
+var friends;
+function animateScore()
+{
+	/*jQuery({ Counter: 0 }).animate({ Counter: $('#yourScore').text() }, {
+  duration: 1000,
+  step: function () {
+    $('#yourScore').text(Math.ceil(this.Counter));
+  }
+});*/
+	$('#yourScore').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 1500,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+	
+}
+
+function checkScore()
+{
+	if($('#summonerNameInput').val().length == 0)
+	{
+		return;	
+	}
+	$.ajax({
+		data:  {'summonerName' : $('#summonerNameInput').val(), 
+				'server' : $('#regionInput').val()},
+		url: 'ws/getScore.php',
+		type:  'post',
+		beforeSend: function () {
+			$("#submitInput").html('<img src="img/checkLoader.gif" width="18" />');
+			$("#submitInput").prop("disabled", true);
+			$("#scoreResult").slideUp(500);
+			if($("#scoreDetailContainer").html().length != 0)
+			{				
+				$("#scoreDetailContainer").slideUp(250);	
+			}
+		},
+		success:  function (response) {
+			$("#submitInput").html('Check Score');
+			$("#submitInput").prop("disabled", false);
+			$("#scoreDataContainer").html(response);
+			$("#scoreResult").slideDown(500);
+			$("#scoreDetailContainer").html('');
+			animateScore();
+		}
+	});
+}
+
+function toggleViewDetails()
+{
+	$("#viewDetailButton").html($("#viewDetailButton").html() != '+ View detail' ? '+ View detail' : '- View detail');	
+	if($("#scoreDetailContainer").html().length > 0)
+	{
+		$("#scoreDetailContainer").slideToggle(500);
+		return;
+	}
+			
+	$.ajax({
+		data:  {'summonerId' : $('#summonerId').val(), 
+				'matchId' : $('#matchId').val()},
+		url: 'ws/getDetails.php',
+		type:  'post',
+		beforeSend: function () {
+			$("#viewDetailButton").html('Loading detail...');
+			$("#viewDetailButton").prop("disabled", true);			
+		},
+		success:  function (response) {
+			$("#viewDetailButton").html('- View detail');
+			$("#viewDetailButton").prop("disabled", false);
+			$("#scoreDetailContainer").html(response);
+			$("#scoreDetailContainer").slideDown(500);
+		}
+	});
+}
+
+function updateRanking()
+{
+	$.ajax({
+		data:  {'regionFilter' : $('#regionFilter').val(), 
+				'sortFilter' : $('#sortFilter').val()},
+		url: 'ws/getRanking.php',
+		type:  'post',
+		beforeSend: function () {
+			$("#updateButton").html('Updating...');
+			$("#updateButton").prop("disabled", true);	
+			if($("#rankingTableContainer").html().length != 0)
+			{
+				$("#rankingTableContainer").slideUp(500);		
+			}
+		},
+		success:  function (response) {			
+			$("#updateButton").html('Update');
+			$("#updateButton").prop("disabled", false);
+			$("#rankingTableContainer").html(response);
+			$("#rankingTableContainer").slideDown(500);
+		}
+	});
+}
+
+function sortUpdateChampionRanking()
+{
+	$.ajax({
+		data:  {'sortChampionFilter' : $('#sortChampionFilter').val()},
+		url: 'ws/getChampionRanking.php',
+		type:  'post',
+		beforeSend: function () {
+			$("#sortButton").html('Updating...');
+			$("#sortButton").prop("disabled", true);	
+			if($("#rankingTableContainer").html().length != 0)
+			{
+				$("#championRankingTableContainer").slideUp(500);		
+			}
+		},
+		success:  function (response) {			
+			$("#sortButton").html('Update');
+			$("#sortButton").prop("disabled", false);
+			$("#championRankingTableContainer").html(response);
+			$("#championRankingTableContainer").slideDown(500);
+		}
+	});
+}
+
+function loadBreakingNews()
+{	
+	$.ajax({		
+		url: 'ws/getBreakingNews.php',
+		type:  'post',
+		beforeSend: function () {
+			
+		},
+		success:  function (response) {			
+			$("#breakingNewsContent").html(response);
+			$("#breakingNewsContainer").slideDown(500);
+		}
+	});
+	
+}
+
+function searchSummoner()
+{
+	if($('#summonerNameInputRegister').val().length == 0)
+	{
+		return;	
+	}
+	$.ajax({
+		data:  {'summonerName' : $('#summonerNameInputRegister').val(), 
+				'server' : $('#regionInputRegister').val(),
+				'fbId' : id,
+				'fbName' : name},
+		url: 'ws/getCodeRegistration.php',
+		type:  'post',
+		beforeSend: function () {
+			$("#searchSummonerButton").html('Searching...');
+			$("#searchSummonerButton").prop("disabled", true);
+		},
+		success:  function (response) {
+			$("#searchSummonerButton").html('Search');
+			$("#searchSummonerButton").prop("disabled", false);
+			if(response === '0')
+			{
+				$("#searchResult").html('Summoner not found.');
+			}
+			else if(response === '1')
+			{
+				$("#searchResult").html('Summoner is already verified.');
+			}
+			else
+			{
+				$("#searchResult").html('Summoner found - <strong>COMPLETED</strong>');
+				$("#registrationCode").html(response);
+			}
+		}
+	});
+}
+
+function finishRegistration()
+{
+	if($('#summonerNameInputRegister').val().length == 0)
+	{
+		return;	
+	}
+	$.ajax({
+		data:  {'summonerName' : $('#summonerNameInputRegister').val(), 
+				'server' : $('#regionInputRegister').val(),
+				'fbId' : id,
+				'fbName' : name},
+		url: 'ws/finishRegistration.php',
+		type:  'post',
+		beforeSend: function () {
+			$("#finishRegistrationButton").html('Checking...');
+			$("#finishRegistrationButton").prop("disabled", true);
+		},
+		success:  function (response) {
+			$("#finishRegistrationButton").html('Finish Registration');
+			$("#finishRegistrationButton").prop("disabled", false);
+			if(response === '0')
+			{
+				$("#registrationResult").html('Summoner not found.');
+			}
+			else if(response === '1')
+			{
+				$("#registrationResult").html('Summoner is already verified.');
+			}
+			else
+			{
+				$("#registrationResult").html(response);
+			}
+		}
+	});
+}
+
+$( document ).ready(function()
+{
+	updateRanking();
+	sortUpdateChampionRanking();
+	loadBreakingNews();
+});
+
+function showRegister()
+{
+	$("#registerFB").fadeIn(250);
+}
+
+function closeRegister()
+{
+	$("#registerFB").fadeOut(250);
+}
+
+function statusChangeCallback(response)
+{
+    if(response.status === 'connected')
+	{
+		getFacebookData();
+		$("#listLoginFB").html('<strike>' + $("#listLoginFB").html() + '</strike> <strong>COMPLETED</strong>');
+    }
+	else
+	{
+		$("#facebookLogin").slideDown(0);
+    }
+}
+
+function getFacebookData()
+{
+	FB.api('/me', function(response)
+	{
+		id = response.id;
+		name = response.first_name + " " + response.last_name;	
+		console.log(id + "  " + name);
+		checkVerificationStatus();
+    });	
+}
+
+function logout()
+{
+	FB.logout(function(response) { });  
+	location.reload();
+}
+
+function checkVerificationStatus()
+{
+	$.ajax({
+		data:  {'fbId' : id},
+		url: 'ws/checkVerificationStatus.php',
+		type:  'post',
+		beforeSend: function () {
+		},
+		success:  function (response) {
+			switch(response)
+			{
+				case '0':
+				case '1': 
+					$("#facebookLogin").html('<button class="loginRegisterButton" onClick="showRegister();">Continue Registration</button>');
+					break;
+				default: 
+					$("#facebookLogin").html('Welcome ' + name + ' - ' + response + '!');
+					getFacebookFriends();
+					break;
+			}
+			$("#facebookLogin").slideDown(0);
+		}
+	});
+}
+
+function getFacebookFriends()
+{
+	friends = [];
+	FB.api('/me/friends', function(response)
+	{
+		for(var i = 0; i < response.data.length; i++)
+		{
+			friends[i] = {"id" : response.data[i].id, "name" : response.data[i].name};
+			console.log(friends[i]);
+		}
+		if(friends.length > 0)
+		{
+			updateFriendsRanking();
+		}
+    });
+}
+
+function updateFriendsRanking()
+{
+	var friendsData = "";
+	for(var i = 0; i < friends.length; i++)
+	{
+		friendsData = friendsData + "#" + friends[i].id;
+	}
+	$.ajax({
+		data:  {'fbId' : id,
+				'friendsData' : friendsData,
+				'sortFilter' : $('#sortFilterFriends').val()},
+		url: 'ws/getFriendsRanking.php',
+		type:  'post',
+		beforeSend: function () {
+			$("#updateButtonFriends").html('Updating...');
+			$("#updateButtonFriends").prop("disabled", true);	
+			$("#friendsTableContainer").slideUp(250);
+		},
+		success:  function (response) {
+			$("#updateButtonFriends").html('Update');
+			$("#updateButtonFriends").prop("disabled", false);
+			switch(response)
+			{
+				case '0':					
+					break;
+				default: 
+					$("#friendsTableContainer").html(response);
+					$("#friendsTableContainer").slideDown(250);
+					$("#friendsRankingContainer").slideDown(500);
+					break;
+			}			
+		}
+	});
+}
+
+function loginFB()
+{
+	window.location = 'https://www.facebook.com/dialog/oauth?client_id=1602340616689786&scope=user_friends&redirect_uri=http://topurf.ddns.net/turf/';
+}
+
+window.fbAsyncInit = function()
+{
+	FB.init({
+		appId      : '1602340616689786',
+		cookie     : true,
+		xfbml      : true,
+		version    : 'v2.2'
+	});
+		
+	FB.getLoginStatus(function(response)
+	{
+		statusChangeCallback(response);
+	});
+};
+
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+</script>
+</head>
+
+<body>
+	<div id="registerFB">
+    	<div id="registerInstructionsContainer">
+        	<h1>Register</h1>
+            <p>Follow the next instructions to complete your registration:</p>
+            <ol>
+            	<li id="listLoginFB">Login with facebook and authorize the TURF App from <a href="https://www.facebook.com/dialog/oauth?client_id=1602340616689786&scope=user_friends&redirect_uri=http://topurf.ddns.net/turf/">HERE</a>.</li>
+                <i>We will not post any spam or collect personal data.</i>
+                <li>Enter your summoner name and region:</li>
+                <input type="text" id="summonerNameInputRegister" />
+                <select id="regionInputRegister">
+                    <option value="br">Brazil</option>
+                    <option value="eune">Europe Nordic &amp; East</option>
+                    <option value="euw">Europe West</option>
+                    <option value="kr">Korea</option>
+                    <option value="lan">Latin America North</option>
+                    <option value="las">Latin America South</option>
+                    <option value="na" selected>North America</option>
+                    <option value="oce">Oceania</option>
+                    <option value="ru">Russia</option>
+                    <option value="tr">Turkey</option>
+                </select>
+                <button id="searchSummonerButton" onClick="searchSummoner();">Search</button>
+                <div id="searchResult"></div>
+                <li>Go to League of Legends Client and create a mastery page with the name: <span id="registrationCode">[COMPLETE STEP 1 AND 2 FIRST]</span></li>
+                <i>It is just for the registration process, once is completed, you can delete this mastery page.</i>
+                <div id="registrationResult"></div>
+            </ol>
+            <button id="finishRegistrationButton" onClick="finishRegistration();">Finish Registration</button>
+            <button id="closeRegisterButton" onClick="closeRegister()">Close</button>
+        </div>
+    </div>
+	<div id="container">
+    	<div id="facebookLogin">
+        	<button class="loginRegisterButton" onClick="loginFB();">Login</button>
+        	<button class="loginRegisterButton" onClick="showRegister();">Register</button>
+        </div>
+    	<div id="breakingNewsContainer">
+        	<table border="0" cellpadding="0" cellspacing="0" width="100%" height="35">
+            	<tr>
+                	<td id="breakingNewsTitle" class="topLeftRounded" width="200" align="center">BREAKING NEWS</td>
+                    <td id="breakingNewsContent" class="topRightRounded">
+                    	<marquee behavior="scroll" direction="left">Teemo death count: 227,034</marquee>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    	<div id="header">
+        	<div id="headerTitle">TURF</div>
+            <div id="headerSubtitle">Top Ultra Rapid Fire</div>
+        </div>
+        <div id="checkScoreContainer">
+        	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+            	<tr>
+                	<td><input type="text" id="summonerNameInput" placeholder="Summoner name..." value=""></td>
+                </tr>
+                <tr>
+                	<td><select id="regionInput">
+                            <option value="br">Brazil</option>
+                            <option value="eune">Europe Nordic &amp; East</option>
+                            <option value="euw">Europe West</option>
+                            <option value="kr">Korea</option>
+                            <option value="lan">Latin America North</option>
+                            <option value="las">Latin America South</option>
+                            <option value="na" selected>North America</option>
+                            <option value="oce">Oceania</option>
+                            <option value="ru">Russia</option>
+                            <option value="tr">Turkey</option>
+            			</select>
+            		</td>
+                </tr>
+                <tr>
+                	<td><button id="submitInput" onClick="checkScore();">Check Score</button></td>
+                </tr>
+            </table> 
+        </div>
+        <div id="scoreResult">
+        	<div id="scoreDataContainer"></div>
+            <div id="scoreDetailContainer"></div>
+        </div>
+        <div id="friendsRankingContainer">
+        	<div class="rankingTitle">Friends Ranking</div>
+            <div class="filtersContainer spacerBottom">
+            	<div>
+                	<table border="0" class="spacerBottom" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                    	<tr>       
+                            <td class="filterTitle3 topLeftRounded bottomLeftRounded">Sort</td>
+                            <td>
+                            	<select id="sortFilterFriends" class="topRightRounded bottomRightRounded">
+                                	<option value="score" selected>Score</option>
+                                    <option value="kills">Kills</option>
+                                    <option value="deaths">Deaths</option>
+                                    <option value="assists">Assists</option>
+                                    <option value="totalDamageDealtToChampions">Total Damage Dealt</option>
+                                    <option value="totalDamageTaken">Total Damage Taken</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><button id="updateButtonFriends" onClick="updateFriendsRanking()">Update</button></td>
+                        </tr>                        
+                    </table>
+                </div>
+            </div>
+            <div id="friendsTableContainer"></div>
+        </div>
+        <div id="worldRankingContainer">
+        	<div class="rankingTitle">Summoner Ranking</div>
+            <div class="filtersContainer spacerBottom">
+            	<div>
+                	<table border="0" class="spacerBottom" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                    	<tr>                        	
+                            <td class="filterTitle topLeftRounded bottomLeftRounded">Region</td>
+                            <td>
+                            	<select id="regionFilter" class="topRightRounded bottomRightRounded">
+                                	<option value="all" selected>All</option>
+                                	<option value="br">Brazil</option>
+                                    <option value="eune">Europe Nordic &amp; East</option>
+                                    <option value="euw">Europe West</option>
+                                    <option value="kr">Korea</option>
+                                    <option value="lan">Latin America North</option>
+                                    <option value="las">Latin America South</option>
+                                    <option value="na">North America</option>
+                                    <option value="oce">Oceania</option>
+                                    <option value="ru">Russia</option>
+                                    <option value="tr">Turkey</option>
+                                </select>
+                            </td>
+                            <td class="spacerRight"></td>
+                            <td class="filterTitle topLeftRounded bottomLeftRounded">Sort</td>
+                            <td>
+                            	<select id="sortFilter" class="topRightRounded bottomRightRounded">
+                                	<option value="score" selected>Score</option>
+                                    <option value="kills">Kills</option>
+                                    <option value="deaths">Deaths</option>
+                                    <option value="assists">Assists</option>
+                                    <option value="totalDamageDealtToChampions">Total Damage Dealt</option>
+                                    <option value="totalDamageTaken">Total Damage Taken</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" align="center"><button id="updateButton" onClick="updateRanking()">Update</button></td>
+                        </tr>                        
+                    </table>
+                </div>
+            </div>
+            <div id="rankingTableContainer"></div>
+        </div>
+        <div id="championRankingContainer">
+        	<div class="rankingTitle">Champion Ranking</div>   
+            <div class="filtersContainer spacerBottom">
+            	<div>
+                	<table border="0" class="spacerBottom" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                    	<tr>                        
+                            <td class="filterTitle2 topLeftRounded bottomLeftRounded">Sort</td>
+                            <td>
+                            	<select id="sortChampionFilter" class="topRightRounded bottomRightRounded">
+                                	<option value="score" selected>Average Score</option>
+                                	<option value="ban">Ban Rate</option>
+                                    <option value="name">Champion Name</option>
+                                    <option value="pick">Pick Rate</option>
+                                    <option value="win">Win Rate</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><button id="sortButton" onClick="sortUpdateChampionRanking()">Update</button></td>
+                        </tr>                        
+                    </table>
+                </div>
+            </div>         	
+            <div id="championRankingTableContainer"></div>
+        </div>
+        <div id="footer" class="spacerTop">
+        	Developed by Towercel - Riot Games API Challenge 2015
+        </div>
+    </div>
+</body>
+</html>

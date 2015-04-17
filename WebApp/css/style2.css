@@ -1,0 +1,499 @@
+@charset "utf-8";
+/* CSS Document */
+
+body
+{
+	font-family: 'Open Sans', sans-serif;	
+	background-color: #262626; 
+	font-size: 16px;
+}
+
+#container
+{
+	width: 960px;	
+	margin: 0 auto 0 auto;
+}
+
+#facebookLogin
+{
+	position: absolute;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	background-color: #363636;
+	color: #999;
+	padding: 10px;
+	font-size: 12px;
+	display: none;
+}
+
+.loginRegisterButton
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 10px;
+	background-color: #464646;
+	border: 1px;
+	border-radius: 15px;
+	outline: none !important;
+}
+
+.loginRegisterButton:hover
+{
+	background-color: #565656;
+}
+
+#registerInstructionsContainer
+{
+	background-color: #FFB81F;
+	border-radius: 15px;	
+	width: 720px;	
+	margin: 0 auto 0 auto;
+	padding: 15px;
+	margin-top: 20px;
+}
+
+#breakingNewsContainer
+{
+	position: fixed;
+    z-index: 100; 
+    bottom: 0; 
+    max-width: 960px;
+	display: none;
+}
+
+#breakingNewsTitle
+{
+	font-weight: 600;
+	color: #FFFFFF;	
+	font-size: 18px;	
+	background-color: #e10404;
+	padding-top: 5px;
+}
+
+#breakingNewsContent
+{
+	background-color: #a41515;	
+	padding-top: 5px;
+	color: #FFFFFF;	
+}
+
+#header
+{
+	margin-bottom: 20px;	
+}
+
+#headerTitle, #headerSubtitle
+{
+	padding-top: 20px;
+	text-align: center;
+	font-size: 96px;	
+	font-weight: 800; 
+	color: #FFB81F;	
+}
+
+#headerSubtitle
+{
+	font-size: 32px;
+	font-weight: 600;
+}
+
+#checkScoreContainer
+{	
+	width: 300px;
+	margin: 0 auto 0 auto;
+}
+
+#summonerNameInput
+{
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background-color: #CCCCCC;
+	border: 0px;
+	font-size: 24px;
+	text-align: center;
+	outline: none !important;
+	width: 100%;
+	height: 40px;
+}
+
+#regionInput
+{
+	background-color: #CCCCCC;
+	border: 1px solid #AAAAAA;
+	padding: 5px;
+	font-size: 24px;
+	text-align: center;
+	outline: none !important;
+	width: 100%;
+}
+
+#submitInput
+{
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	background-color: #E63448;
+	border: 0px;
+	padding: 5px;
+	font-size: 24px;
+	text-align: center;
+	outline: none !important;
+	font-weight: 600;
+	color: #FFFFFF;
+	width: 100%;
+}
+
+#submitInput:hover
+{
+	background-color: #b52637;
+}
+
+#scoreResult
+{
+	display: none;
+}
+
+#scoreDataContainer
+{
+	margin-top: 20px;
+	background-color: #FFB81F;
+	border-radius: 15px;	
+	border: 1px solid #FFB81F;
+}
+
+#yourScore
+{
+	font-size: 48px;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: 800;
+	height: 70px;
+}
+
+#yourGeneralRank
+{
+	font-size: 18px;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: 600;
+	height: 24px;
+}
+
+#errorMsg
+{
+	font-size: 32px;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: 600;
+	height: 48px;
+}
+
+#viewDetailButton
+{
+	text-align: center;
+	font-weight: 600;
+	font-size: 18px;
+	background-color: #F0F000;	
+	border: 1px solid #F0F000;
+	border-bottom-right-radius: 15px;
+	height: 24px;
+	line-height: 24px;
+	width: 100%;
+	outline: none !important;
+}
+
+#viewDetailButton:hover
+{
+	background-color: #E0E000;
+}
+
+#scoreDetailContainer
+{
+	display: none;	
+	margin-top: 20px;
+	background-color: #FFB81F;
+	border-radius: 15px;	
+	border: 1px solid #FFB81F;
+	text-align: center;
+}
+
+#registerFB
+{
+	display: none;
+	background: rgba(0, 0, 0, 0.75);
+	width: 100%;
+	height: 900%;
+	position: absolute;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+}
+
+#friendsRankingContainer
+{
+	margin-top: 20px;
+	background-color: #E66F47;
+	border-radius: 15px;	
+	border: 1px solid #E66F47;
+	display: none;
+}
+
+#worldRankingContainer
+{
+	margin-top: 20px;
+	background-color: #0D7E4A;
+	border-radius: 15px;	
+	border: 1px solid #0D7E4A;
+}
+
+#championRankingContainer
+{
+	margin-top: 20px;
+	background-color: #1B7099;
+	border-radius: 15px;	
+	border: 1px solid #1B7099;
+}
+
+#filtersContainer
+{
+/*	display: none;	*/
+}
+
+.filterTitle
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding-left: 10px;
+	padding-right: 5px;
+	background-color: #035c33;
+	text-align: right;
+}
+
+.filterTitle2
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding-left: 10px;
+	padding-right: 5px;
+	background-color: #124963;
+	text-align: right;	
+}
+
+.filterTitle3
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding-left: 10px;
+	padding-right: 5px;
+	background-color: #db5a2f;
+	text-align: right;
+}
+
+#regionFilter, #sortFilter
+{
+	background-color: #048b4d;
+	color: #FFFFFF;
+	border: 0px;
+	padding: 5px;
+	font-size: 16px;
+	text-align: center;
+	outline: none !important;
+	width: 100%;	
+}
+
+#sortChampionFilter
+{
+	background-color: #1780B3;
+	color: #FFFFFF;
+	border: 0px;
+	padding: 5px;
+	font-size: 16px;
+	text-align: center;
+	outline: none !important;
+	width: 100%;	
+}
+
+#sortFilterFriends
+{
+	background-color: #e57e5c;
+	color: #FFFFFF;
+	border: 0px;
+	padding: 5px;
+	font-size: 16px;
+	text-align: center;
+	outline: none !important;
+	width: 100%;	
+}
+
+#updateButton
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 10px;
+	background-color: #035c33;
+	border: 1px;
+	border-radius: 15px;	
+	margin-top: 10px;
+	outline: none !important;
+}
+
+#sortButton
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 10px;
+	background-color: #124963;
+	border: 1px;
+	border-radius: 15px;	
+	margin-top: 10px;
+	outline: none !important;
+}
+
+#updateButtonFriends
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 10px;
+	background-color: #db5a2f;
+	border: 1px;
+	border-radius: 15px;	
+	margin-top: 10px;
+	outline: none !important;
+}
+
+#closeRegisterButton
+{
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 10px;
+	background-color: #A00;
+	border: 1px;
+	border-radius: 15px;	
+	margin-top: 20px;
+	outline: none !important;
+	width: 200px;
+	display: block;
+	
+}
+
+#closeRegisterButton:hover
+{
+	background-color: #D00;	
+}
+
+#updateButton:hover
+{
+	background-color: #04693a;
+}
+
+#sortButton:hover
+{
+	background-color: #186183;	
+}
+
+#updateButtonFriends:hover
+{
+	background-color: #db643d;	
+}
+
+.rankingTitle
+{
+	color: #FFFFFF;
+	font-size: 32px;
+	font-weight: 600;	
+	height: 48px;
+	line-height: 48px;
+	text-align: center;
+}
+
+.thColumn
+{
+	color: #FFFFFF;
+	font-size: 18px;	
+	background-color: #4b4b4b;
+	height: 35px;
+}
+
+.trOdd
+{
+	background-color: #ececec;	
+	text-align: center;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	height: 30px;
+}
+
+.trEve
+{
+	background-color: #f4f4f4;	
+	text-align: center;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	height: 30px;
+}
+
+.topRightRounded
+{
+	border-top-right-radius: 15px;	
+}
+
+.topLeftRounded
+{
+	border-top-left-radius: 15px;	
+}
+
+.bottomRightRounded
+{
+	border-bottom-right-radius: 15px;	
+}
+
+.bottomLeftRounded
+{
+	border-bottom-left-radius: 15px;	
+}
+
+.spacerTop
+{
+	margin-top: 15px;	
+}
+
+.spacerBottom
+{
+	margin-bottom: 15px;	
+}
+
+.spacerRight
+{
+	padding-left: 15px;	
+}
+
+#footer
+{
+	font-size: 11px;
+	color: #666;
+	text-align: center;
+	margin-bottom: 60px;
+}
+
+
+@media (max-width: 1020px)
+{
+	#container
+	{
+		width: 80%;	
+		margin: 0 auto 0 auto;
+	}
+	
+	#breakingNewsContainer
+	{
+		width: 80%;	
+		margin: 0 auto 0 auto;
+	}
+}
